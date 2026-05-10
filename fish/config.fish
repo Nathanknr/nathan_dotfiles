@@ -18,3 +18,4 @@ end
 
 
 set -g fish_key_bindings fish_vi_key_bindings
+alias fr='bash ~/.config/scripts/anki_add.sh'
