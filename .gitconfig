@@ -16,3 +16,5 @@
 	dark = true
 [merge]
 	conflictStyle = zdiff3
+[alias]
+	lol = log --oneline --graph --all
