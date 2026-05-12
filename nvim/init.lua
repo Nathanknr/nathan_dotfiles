@@ -118,7 +118,26 @@ require("lazy").setup({
       dependencies = { { "echasnovski/mini.icons", opts = {} } },
       lazy = false,
     },
-    {
+    
+{
+  "olimorris/codecompanion.nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
+  },
+  opts = {
+    strategies = {
+      chat = {
+        adapter = "openai",
+      },
+    },
+
+    opts = {
+      log_level = "DEBUG",
+    },
+  },
+},
+   {
       "SirVer/ultisnips",
       event = "InsertEnter",
       lazy = false, 
