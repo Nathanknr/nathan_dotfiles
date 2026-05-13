@@ -1,0 +1,18 @@
+snippet evan "evan.typ setup" b
+#import "@local/evan:1.0.0":*
+
+#show: evan.with(
+  title: [${1:<+Title+>}],
+  subtitle: none,
+  author: "Nathan Kamgang",
+  date: datetime.today(),
+)
+
+#toc
+$0
+endsnippet
+
+snippet vec "vector" 
+arrow($1)$0
+endsnippet
+
