@@ -94,6 +94,7 @@ require("lazy").setup({
     ensure_installed = {
 
       "tinymist",
+      "pyright"
 
     },
 
@@ -153,7 +154,6 @@ require("lazy").setup({
   install = { colorscheme = { "habamax" } },
   checker = { enabled = true },
 })
-
 vim.opt.number = true
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = ""
