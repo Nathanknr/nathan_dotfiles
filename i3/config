@@ -1,6 +1,8 @@
 # i3 config file (v4)
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+gaps inner 5 
+gaps outer 0
 
 set $mod Mod4
 
