@@ -18,3 +18,9 @@ end
 
 
 alias fr='bash ~/.config/scripts/add_free_recall_prompt.sh'
+
+function ww
+	cd /home/nathan/Resources/Notes/classes/Math_Computing
+	conda activate math
+	spyder
+end
