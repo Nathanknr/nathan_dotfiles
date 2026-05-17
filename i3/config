@@ -161,3 +161,8 @@ bar {
   }
   status_command i3status
 }
+
+
+# Hotkeys
+bindsym $mod+b exec brave-browser
+bindsym $mod+t exec thunar
