@@ -116,6 +116,11 @@ snippet "mvt" "Mean Value Theorem"
 f'(c) = \frac{f(b) - f(a)}{b - a}
 endsnippet
 
+contect "math()"
+snippet ha "\hat{}" iA
+\hat{$1}$0
+endsnippet
+
 snippet "ftc1" "Fundamental Theorem of Calculus I"
 \frac{d}{dx} \int_a^x f(t)\,dt = f(x)
 endsnippet
@@ -335,7 +340,7 @@ endsnippet
 
 
 snippet "([^a-zA-Z])trigger" "mm" rA
-`!p snip.rv = match.group(1)`\$ ${1:${VISUAL:}} \$$0
+`!p snip.rv = match.group(1)`\$${1:${VISUAL:}}\$$0
 endsnippet
 
 snippet "(^|[^a-zA-Z])ff" "\frac{}{}" rA
