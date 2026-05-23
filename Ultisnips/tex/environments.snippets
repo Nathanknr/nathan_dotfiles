@@ -43,7 +43,7 @@ endsnippet
 snippet fig "Include latest figure from Dropbox"
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\columnwidth]{`ls -t ~/Dropbox/figures/*.png | head -1 | xargs basename`}
+    \includegraphics[width=0.8\columnwidth]{`ls -t ~/Dropbox/figures/* | head -1`}
     \caption{${1:caption}}
     \label{fig:${2:label}}
 \end{figure}
