@@ -27,6 +27,7 @@ endsnippet
 snippet sevan "evan sexy" iA
 \documentclass[11pt]{scrartcl}
 \usepackage[sexy]{evan}
+\graphicspath{{~/Dropbox/figures/}}
 
 \author{Nathan Kamgang}
 
@@ -39,3 +40,12 @@ $0
 \end{document}
 endsnippet
 
+snippet fig "Include latest figure from Dropbox"
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\columnwidth]{`ls -t ~/Dropbox/figures/*.png | head -1 | xargs basename`}
+    \caption{${1:caption}}
+    \label{fig:${2:label}}
+\end{figure}
+$0
+endsnippet
