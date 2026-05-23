@@ -166,3 +166,8 @@ bar {
 # Hotkeys
 bindsym $mod+b exec brave-browser
 bindsym $mod+t exec thunar
+
+
+# Warm up certain applications
+exec --no-startup-id task next > /dev/null 2>&1
+exec --no-startup-id task all > /dev/null 2>&1
