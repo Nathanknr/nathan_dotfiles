@@ -1,0 +1,12 @@
+global !p
+
+def math():
+  return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+endglobal
+
+
+context "math()"
+snippet km "Combine" iA 
+\frac{$1!}{$2!($1-$2)!}$0
+endsnippet
+
