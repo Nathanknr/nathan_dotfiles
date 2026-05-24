@@ -171,3 +171,18 @@ bindsym $mod+t exec thunar
 # Warm up certain applications
 exec --no-startup-id task next > /dev/null 2>&1
 exec --no-startup-id task all > /dev/null 2>&1
+
+
+# Here we configure various modes
+
+# power mode [shift+backslash] {{{
+mode "power" {
+  bindsym e exit
+  bindsym s exec --no-startup-id systemctl suspend, mode "default"
+  bindsym p exec --no-startup-id systemctl poweroff
+  bindsym r exec --no-startup-id systemctl reboot
+  bindsym Return mode "default"
+  bindsym Escape mode "default"
+}
+bindsym $mod+Shift+p mode "power"
+# }}}
