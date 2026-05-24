@@ -2,6 +2,11 @@
 
 LOG_FILE=~/.anki_debug.log
 echo "Starting script..." > "$LOG_FILE"
+if ! pgrep -x anki > /dev/null; then
+    DISPLAY=:0 i3-msg 'exec anki'
+    sleep 2
+    i3-msg '[class="Anki"] move to workspace 10'
+fi
 
 if [ "$#" -ge 3 ]; then
     deck="$1"
