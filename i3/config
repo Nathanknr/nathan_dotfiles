@@ -177,20 +177,20 @@ exec --no-startup-id task all > /dev/null 2>&1
 
 # power mode [shift+backslash] {{{
 mode "power" {
-  bindsym e exit
+  bindsym e exit, mode "default"
   bindsym s exec --no-startup-id systemctl suspend, mode "default"
-  bindsym p exec --no-startup-id systemctl poweroff
-  bindsym r exec --no-startup-id systemctl reboot
+  bindsym p exec --no-startup-id systemctl poweroff, mode "default"
+  bindsym r exec --no-startup-id systemctl reboot, mode "default"
   bindsym Escape mode "default"
 }
 bindsym $mod+Shift+p mode "power"; exec --no-startup-id ~/.config/i3/reminder-power.sh
 # }}}
 
 mode "study" {
-  bindsym p exec kitty fish -c "cd /home/nathan/Resources/Notes && p"
+  bindsym p exec kitty fish -c "cd /home/nathan/Resources/Notes && p", mode "defaul"
   bindsym a exec anki, mode "default"
-  bindsym c exec kitty fish --init-command "commandline -i 'fr'"
-  bindsym s exec kitty fish -c "ww"
+  bindsym c exec kitty fish --init-command "commandline -i 'fr'", mode "default"
+  bindsym s exec kitty fish -c "ww", mode "default"
   bindsym Escape mode "default"
 }
 bindsym $mod+Shift+w mode "study"; exec --no-startup-id ~/.config/i3/reminder-study.sh
