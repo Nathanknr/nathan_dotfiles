@@ -43,21 +43,7 @@ require("lazy").setup({
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     }
 },
-{
-  "frabjous/knap",
-  config = function()
-    -- settings
-    -- keymaps
-    local knap = require("knap")
-    local opts = { silent = true }
-
-    vim.keymap.set({ "n", "v", "i" }, "<F4>", function() knap.process_once() end, opts)
-    vim.keymap.set({ "n", "v", "i" }, "<F6>", function() knap.close_viewer() end, opts)
-    vim.keymap.set({ "n", "v", "i" }, "<F7>", function() knap.toggle_autopreviewing() end, opts)
-    vim.keymap.set({ "n", "v", "i" }, "<F8>", function() knap.forward_jump() end, opts)
-  end,
-},
-    {
+   {
   "pxwg/math-conceal.nvim",
   event = "VeryLazy",
   main = "math-conceal",
