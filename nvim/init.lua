@@ -40,7 +40,10 @@ require("lazy").setup({
 {
   "frabjous/knap",
   config = function()
-
+    -- settings
+     vim.g.knap_settings = {
+  delay = 550,  -- milliseconds, increase if still blinks
+}
     -- keymaps
     local knap = require("knap")
     local opts = { silent = true }
