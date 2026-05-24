@@ -171,8 +171,6 @@ bindsym $mod+t exec thunar
 # Warm up certain applications
 exec --no-startup-id task next > /dev/null 2>&1
 exec --no-startup-id task all > /dev/null 2>&1
-exec --no-startup-id anki all > /dev/null 2>&1
-
 
 # Here we configure various modes
 
