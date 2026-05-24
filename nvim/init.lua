@@ -27,6 +27,12 @@ require("lazy").setup({
       init = function()
         vim.g.vimtex_view_method = "zathura"
         vim.g.tex_conceal = "abdmg"
+	   vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+            pattern = "*.tex",
+            callback = function()
+                vim.cmd("silent! write")
+            end,
+        })
       end,
     },
     {
@@ -41,9 +47,6 @@ require("lazy").setup({
   "frabjous/knap",
   config = function()
     -- settings
-     vim.g.knap_settings = {
-  delay = 550,  -- milliseconds, increase if still blinks
-}
     -- keymaps
     local knap = require("knap")
     local opts = { silent = true }
