@@ -174,7 +174,7 @@ exec --no-startup-id task all > /dev/null 2>&1
 
 # Here we configure various modes
 
-# power mode [shift+backslash] {{{
+# power mode [mod+p] {{{
 mode "power" {
   bindsym e exit, mode "default"
   bindsym s exec --no-startup-id systemctl suspend, mode "default"
@@ -185,6 +185,7 @@ mode "power" {
 bindsym $mod+Shift+p mode "power"; exec --no-startup-id ~/.config/i3/reminder-power.sh
 # }}}
 
+# study mode [mod + w]
 mode "study" {
   bindsym p exec kitty fish -c "cd /home/nathan/Resources/Notes && p", mode "defaul"
   bindsym a exec anki, mode "default"
