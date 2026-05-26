@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 # md is probably better and more lightweight but oh boy do i love a  pretty pdf
-z pdf
+cd /home/nathan/Resources/Notes/pdf
 rm plan.tex
 touch plan.tex
 cat > plan.tex <<EOF
