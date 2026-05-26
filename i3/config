@@ -191,6 +191,7 @@ mode "study" {
   bindsym a exec anki, mode "default"
   bindsym c exec kitty fish --init-command "commandline -i 'fr'", mode "default"
   bindsym s exec kitty fish -c "ww", mode "default"
+  bindsym d exec --no-startup-id kitty fish -c "~/.config/scripts/plan_your_day.sh", mode "default"
   bindsym Escape mode "default"
 }
 bindsym $mod+Shift+w mode "study"; exec --no-startup-id ~/.config/i3/reminder-study.sh
