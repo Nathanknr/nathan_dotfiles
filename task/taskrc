@@ -24,7 +24,7 @@ hooks.location=~/.config/task/.task/hooks
 #include solarized-light-256.theme
 #include no-color.theme
 
-include server.taskrc
+#include server.taskrc
 
 report.list.filter=project.not:Inbox and project.not:someday status:pending -WAITING
 uda.reviewed.type=date
