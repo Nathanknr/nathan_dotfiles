@@ -12,6 +12,8 @@ alias.mm=+math
 alias.ww=+whatsapp
 alias.ll=+leisure
 alias.dd=modify due:today
+alias.inbox=+inbox
+alias.someday=+someday
 
 
 # Color theme (uncomment one to use)
