@@ -7,6 +7,13 @@ news.version=3.4.2
 
 hooks.location=~/.config/task/.task/hooks
 
+alias.inn=+inbox
+alias.mm=+math
+alias.ww=+whatsapp
+alias.ll=+leisure
+alias.dd=modify due:today
+
+
 # Color theme (uncomment one to use)
 #include light-16.theme
 #include light-256.theme
