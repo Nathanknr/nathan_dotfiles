@@ -165,7 +165,7 @@ bar {
 
 # Hotkeys
 bindsym $mod+b exec brave-browser
-bindsym $mod+t exec thunar
+bindsym $mod+t exec rofi -modi tasks:rofi-taskwarrior -show tasks
 
 
 # Warm up certain applications
@@ -195,3 +195,4 @@ mode "study" {
   bindsym Escape mode "default"
 }
 bindsym $mod+Shift+w mode "study"; exec --no-startup-id ~/.config/i3/reminder-study.sh
+
