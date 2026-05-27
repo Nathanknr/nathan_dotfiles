@@ -39,7 +39,7 @@ bindsym $mod+Return exec kitty
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#005577' -sf '#EEEEEE' -fn 'monospace-10'"
+bindsym $mod+d exec --no-startup-id rofi -show drun
 
 # Use vim-style movement
 bindsym $mod+h focus left
@@ -166,7 +166,7 @@ bar {
 # Hotkeys
 bindsym $mod+b exec brave-browser
 bindsym $mod+t exec rofi -modi tasks:rofi-taskwarrior -show tasks
-
+bindsym Control+a exec rofi -modi calc -show calc -calc-command 'xdotool type --clearmodifiers "{result}"'
 
 # Warm up certain applications
 exec --no-startup-id task next > /dev/null 2>&1
