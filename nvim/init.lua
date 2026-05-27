@@ -21,27 +21,44 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   spec = {
-    {
-      "lervag/vimtex",
-      lazy = false,
-      init = function()
-        vim.g.vimtex_view_method = "zathura"
-        vim.g.tex_conceal = "abdmg"
-	   vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
-            pattern = "*.tex",
-            callback = function()
-                vim.cmd("silent! write")
-            end,
-        })
+  {
+  "lervag/vimtex",
+  lazy = false,
+  init = function()
+    vim.g.vimtex_view_method = "zathura"
+    vim.g.tex_conceal = "abdmg"
+
+    local save_timer = nil
+
+    vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+      pattern = "*.tex",
+      callback = function()
+        if save_timer then
+          save_timer:stop()
+          save_timer:close()
+        end
+        save_timer = vim.uv.new_timer()
+        save_timer:start(500, 0, vim.schedule_wrap(function()
+          vim.cmd("silent! write")
+          save_timer:close()
+          save_timer = nil
+        end))
       end,
-    },
-    {
+    })
+  end,
+},    {
     'nvim-telescope/telescope.nvim', version = '*',
     dependencies = {
         'nvim-lua/plenary.nvim',
         -- optional but recommended
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     }
+},
+{
+    "goolord/alpha-nvim",
+    config = function()
+        require("alpha").setup(require("alpha.themes.dashboard").config)
+    end
 },
    {
   "pxwg/math-conceal.nvim",
@@ -126,25 +143,8 @@ require("lazy").setup({
       lazy = false,
     },
     
-{
-  "olimorris/codecompanion.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-treesitter/nvim-treesitter",
-  },
-  opts = {
-    strategies = {
-      chat = {
-        adapter = "openai",
-      },
-    },
-
-    opts = {
-      log_level = "DEBUG",
-    },
-  },
-},
-   {
+    {
+  {
       "SirVer/ultisnips",
       event = "InsertEnter",
       lazy = false, 
@@ -159,7 +159,8 @@ require("lazy").setup({
   },
   install = { colorscheme = { "habamax" } },
   checker = { enabled = true },
-})
+  }
+  })
 vim.opt.number = true
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = ""
