@@ -91,22 +91,6 @@
     }
   end,
 },
-{
-
-  "mason-org/mason.nvim",
-
-  opts = {
-
-    ensure_installed = {
-
-      "tinymist",
-      "pyright"
-
-    },
-
-  },
-
-},
    {
       'stevearc/oil.nvim',
       opts = {},
