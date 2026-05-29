@@ -54,13 +54,7 @@ require("lazy").setup({
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     }
 },
-{
-    "goolord/alpha-nvim",
-    config = function()
-        require("alpha").setup(require("alpha.themes.dashboard").config)
-    end
-},
-   {
+  {
   "pxwg/math-conceal.nvim",
   event = "VeryLazy",
   main = "math-conceal",
@@ -164,6 +158,7 @@ require("lazy").setup({
 vim.opt.number = true
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = ""
+
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
