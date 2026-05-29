@@ -118,19 +118,7 @@ require("lazy").setup({
   },
 
 },
-{
-  "tools-life/taskwiki",
-  lazy = false,
-  priority = 900,  -- Load after vimwiki
-  dependencies = {
-    "vimwiki/vimwiki",
-    "powerman/vim-plugin-AnsiEsc",
-  },
-  init = function()
-    -- Ensure taskwiki uses the correct Python
-    vim.g.taskwiki_disable_concealcursor = 1
-  end,
-},   {
+   {
       'stevearc/oil.nvim',
       opts = {},
       dependencies = { { "echasnovski/mini.icons", opts = {} } },
