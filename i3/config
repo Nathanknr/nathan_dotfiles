@@ -166,7 +166,7 @@ bar {
 # Hotkeys
 bindsym $mod+b exec brave-browser
 bindsym $mod+t exec rofi -modi tasks:rofi-taskwarrior -show tasks
-bindsym Control+a exec rofi -modi calc -show calc -calc-command 'xdotool type --clearmodifiers "{result}"'
+bindsym $mod+g exec rofi -modi calc -show calc -calc-command 'xdotool type --clearmodifiers "{result}"'
 
 # Warm up certain applications
 exec --no-startup-id task next > /dev/null 2>&1
