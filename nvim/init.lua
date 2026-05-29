@@ -159,6 +159,11 @@ vim.opt.number = true
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = ""
 
+-- Didn't know this option I had to do "+y
+-- Where have you beeennnnn!!!
+vim.opt.clipboard:append('unnamedplus')
+vim.opt.background = 'dark'
+
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
