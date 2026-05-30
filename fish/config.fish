@@ -24,3 +24,14 @@ function ww
 	conda activate math
 	spyder
 end
+
+
+# Abbrev
+# Git abbreviations
+abbr --add g git
+abbr --add ga "git add"
+abbr --add gc 'git commit -m'
+abbr --add gp 'git push'
+abbr --add gs 'git status'
+abbr --add gd 'git diff'
+abbr --add gl 'git log --oneline --graph --all'
