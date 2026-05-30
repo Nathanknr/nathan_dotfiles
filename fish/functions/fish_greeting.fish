@@ -13,7 +13,7 @@ function fish_greeting
         set_color --italics
         printf "Hello %s! " $USER
         set_color normal
-        printf "Type "
+        printf "\nType "
         set_color --bold cyan
         printf "help"
         set_color normal
