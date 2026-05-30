@@ -171,7 +171,7 @@ bindsym $mod+g exec rofi -modi calc -show calc -calc-command 'xdotool type --cle
 # Warm up certain applications
 exec --no-startup-id task next > /dev/null 2>&1
 exec --no-startup-id task all > /dev/null 2>&1
-
+exec --no-startup-id ~/.config/scripts/morning_start_up > /dev/null 2>&1
 # Here we configure various modes
 
 # power mode [mod+p] {{{
