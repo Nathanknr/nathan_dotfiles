@@ -31,5 +31,17 @@ return {
     vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Help tags" })
     vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Commands" })
-  end,
+vim.keymap.set("n", "<leader>uu", function()
+  builtin.find_files({ cwd = "~/.config/Ultisnips/" })
+end, { desc = "Search UltiSnips" })
+
+vim.keymap.set("n", "<leader>nn", function()
+  builtin.find_files({ cwd = "~/.config/nvim/" })
+end, { desc = "Search neovim config" })
+
+end
+
 }
+
+
+
