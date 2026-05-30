@@ -92,13 +92,6 @@
   end,
 },
    {
-      'stevearc/oil.nvim',
-      opts = {},
-      dependencies = { { "echasnovski/mini.icons", opts = {} } },
-      lazy = false,
-    },
-    
-    {
   {
       "SirVer/ultisnips",
       event = "InsertEnter",
