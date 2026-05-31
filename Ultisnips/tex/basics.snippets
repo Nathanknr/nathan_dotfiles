@@ -16,6 +16,11 @@ snippet lam "lambda" iA
 \lambda
 endsnippet
 
+snippet "(^[+-]?(\d+(\.\d*)?|\.\d+)$)wr" "wrap number in math mode"  rA
+$`!p snip.rv = match.group(1)`$
+endsnippet
+
+
 context "math()"
 snippet ln "the natural log" Ai
 \ln{(${1:${VISUAL:}})}$0
@@ -441,7 +446,7 @@ endsnippet
 # Think of kk like equal
 context "math()"
 snippet ee "equals" iA
-&= $0 \\\
+$1 &= $0 \\\
 endsnippet
 
 snippet sympy "sympyblock " w
