@@ -8,8 +8,6 @@ news.version=3.4.2
 hooks.location=~/.config/task/.task/hooks
 
 alias.inn=+inbox
-alias.mm=+math
-alias.ww=+whatsapp
 alias.ll=+leisure
 alias.dd=modify due:today
 alias.inbox=+inbox
