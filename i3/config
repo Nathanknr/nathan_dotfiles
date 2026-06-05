@@ -167,11 +167,13 @@ bar {
 bindsym $mod+b exec brave-browser
 bindsym $mod+t exec rofi -modi tasks:rofi-taskwarrior -show tasks
 bindsym $mod+g exec rofi -modi calc -show calc -calc-command 'xdotool type --clearmodifiers "{result}"'
+bindsym $mod+Shift+b exec --no-startup-id ~/.config/i3/start_break.sh
 
 # Warm up certain applications
 exec --no-startup-id task next > /dev/null 2>&1
 exec --no-startup-id task all > /dev/null 2>&1
 exec --no-startup-id ~/.config/scripts/morning_start_up > /dev/null 2>&1
+
 # Here we configure various modes
 
 # power mode [mod+p] {{{
