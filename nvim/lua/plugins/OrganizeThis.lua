@@ -32,6 +32,11 @@ return {
 		end,
 	},
 	{
+		"tools-life/taskwiki",
+		lazy = false,
+		dependencies = { "vimwiki/vimwiki" },
+	},
+	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
 		opts = {
