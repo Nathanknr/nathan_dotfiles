@@ -47,3 +47,4 @@ urgency.user.tag.plan.coefficient=5.5
 urgency.user.tag.review.coefficient=5.0
 urgency.user.tag.com.coefficient=3.5
 urgency.user.tag.house.coefficient=4.5
+urgency.user.tag.learn.coefficient=4.75
