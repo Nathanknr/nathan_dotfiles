@@ -40,3 +40,10 @@ report._reviewed.description=Tasksh review report.  Adjust the filter to your ne
 report._reviewed.columns=uuid
 report._reviewed.sort=reviewed+,modified+
 report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
+
+
+# Urgency coefficient adjusment
+urgency.user.tag.plan.coefficient=5.5
+urgency.user.tag.review.coefficient=5.0
+urgency.user.tag.com.coefficient=3.5
+urgency.user.tag.house.coefficient=4.5
