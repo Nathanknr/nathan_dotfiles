@@ -1,0 +1,8 @@
+[Unit]
+Description=Run reminder every hour
+
+[Timer]
+OnCalendar=hourly
+
+[Install]
+WantedBy=timers.target

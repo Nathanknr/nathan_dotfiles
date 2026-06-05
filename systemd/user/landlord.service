@@ -1,0 +1,6 @@
+[Unit]
+Description=Landlord reminder
+
+[Service]
+Type=oneshot
+ExecStart=/home/nathan/.config/scripts/remind_landlord.sh
