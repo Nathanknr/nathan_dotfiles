@@ -1,6 +1,7 @@
 [user]
 	email = nathankamgang4270@gmail.com
 	name = Nathanknr
+	signingkey = 79BFC60B0E4B822B
 [init]
 	defaultBranch = main
 [credential]
@@ -18,3 +19,5 @@
 	conflictStyle = zdiff3
 [alias]
 	lol = log --oneline --graph --all
+[commit]
+	gpgsign = true
