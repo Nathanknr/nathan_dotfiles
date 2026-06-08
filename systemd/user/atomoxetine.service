@@ -1,0 +1,7 @@
+[Unit]
+Description=Remind me to drink atomoxetine
+
+[Service]
+Type=oneshot
+ExecStart=/home/nathan/.config/scripts/atomoxetine.sh
+
