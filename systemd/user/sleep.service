@@ -1,0 +1,8 @@
+[Unit]
+Description=Turn off pc 
+
+[Service]
+Type=oneshot
+ExecStart=/home/nathan/.config/scripts/sleep_early.sh
+
+
