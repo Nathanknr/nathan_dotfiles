@@ -2,7 +2,6 @@
 
 function p
     set open xdg-open
-    cd ~/Downloads
     ag -U -g '.pdf$' \
     | fast-p \
     | fzf --read0 --reverse -e -d (printf '\t') \
