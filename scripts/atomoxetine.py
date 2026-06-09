@@ -26,7 +26,9 @@ class PillStock:
         self.lastFullDose: date = None
 
     def _resetIfNewDay(self):
-        if self.lastFullDose != today:
+        if self.lastFullDose == None:
+            return
+        if self.lastFullDose < today:
             self.numberOfDosesTakenToday = 0
 
     def _markFullDoseIfComplete(self):
@@ -48,7 +50,6 @@ class PillStock:
     def drinkMeds(self):
         import pywhatkit
 
-        self._resetIfNewDay()
 
         if self.lastFullDose == today:
             print("Already completed today's dose.")
@@ -63,7 +64,6 @@ class PillStock:
             self.numberOfDosesTakenToday += 1
             self.updateStock()
             self.recompute()
-            self._markFullDoseIfComplete()
 
         elif not self.splitDose and self.numberOfDosesTakenToday == 0:
             pywhatkit.sendwhatmsg_instantly(
@@ -74,13 +74,13 @@ class PillStock:
             self.numberOfDosesTakenToday += 1
             self.updateStock()
             self.recompute()
-            self._markFullDoseIfComplete()
 
     def status(self):
         print(f'Stock remaining: {self.stock} pills')
+        print(f'Number of pills per day: {self.numberOfPillsPerDay}')
+        print(f'Number of doses taken today: {self.numberOfDosesTakenToday:}')
         print(f'Days covered: {self.numberOfDaysCovered:.1f}')
         print(f'Stock ends: {self.dateWhenStockEnds.strftime("%Y-%m-%d")}')
-        print(f'Doses taken today: {self.numberOfDosesTakenToday}')
         print(f'Last full dose: {self.lastFullDose}')
         print(f'Split dose {self.splitDose}')
 
@@ -102,9 +102,11 @@ if arg == "init":
 with open("atomoxetine.pkl", "rb") as f:
     atomoxetine = pickle.load(f)
 
-if sys.argv[1]== "status":
+if arg == "status":
     atomoxetine.status()
 else:
+    atomoxetine._resetIfNewDay()
     atomoxetine.drinkMeds()
+    atomoxetine._markFullDoseIfComplete()
     with open("atomoxetine.pkl", "wb") as f:
         pickle.dump(atomoxetine, f)
