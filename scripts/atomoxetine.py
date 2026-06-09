@@ -4,7 +4,6 @@
 # If you're useful, I promise to improve you
 from datetime import timedelta, datetime, date
 import os
-import pywhatkit
 import pickle
 from dotenv import load_dotenv
 import sys
@@ -47,6 +46,8 @@ class PillStock:
         self.dateWhenStockEnds = datetime.now() + timedelta(days=self.numberOfDaysCovered)
 
     def drinkMeds(self):
+        import pywhatkit
+
         self._resetIfNewDay()
 
         if self.lastFullDose == today:

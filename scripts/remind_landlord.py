@@ -2,7 +2,6 @@ from datetime import timedelta, datetime
 import pickle
 import os
 import sys
-import pywhatkit
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,6 +26,7 @@ class Scheduler:
         if self.status == 'waiting' and datetime.now() < self.dueDate:
             return
         elif datetime.now() >= self.dueDate:
+            import pywhatkit
             self.status = 'waiting'
             pywhatkit.sendwhatmsg_instantly(AROKIUM_NUM, AROKIUM_MSG, 10)
             self.updateDueDate()
