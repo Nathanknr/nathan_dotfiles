@@ -5,4 +5,4 @@
 notify-send "Going down baby " "Shutting off in 10 seconds. You should be asleep nigger" -u critical
 sleep 10
 
-systemctl power off
+systemctl poweroff
