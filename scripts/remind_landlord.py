@@ -9,6 +9,7 @@ load_dotenv()
 AROKIUM_NUM = os.environ.get("AROKIUM_NUM")
 AROKIUM_MSG = os.environ.get("AROKIUM_MSG").replace("\\n", "\n")
 NATHAN_NUM = os.environ.get("NATHAN_NUM")
+NTFY_TOPIC= os.environ.get("NTFY_TOPIC")
 
 class Scheduler:
     interval = timedelta(days=29, hours=7)
@@ -27,8 +28,10 @@ class Scheduler:
             return
         elif datetime.now() >= self.dueDate:
             import pywhatkit
+            import requests
             self.status = 'waiting'
             pywhatkit.sendwhatmsg_instantly(AROKIUM_NUM, AROKIUM_MSG, 10)
+            requests.post(NTFY_TOPIC,AROKIUM_MSG)
             self.updateDueDate()
 
     def moneyReceived(self):
