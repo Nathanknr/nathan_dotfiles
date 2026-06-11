@@ -10,6 +10,7 @@ import sys
 
 load_dotenv()
 NATHAN_NUM = os.environ.get("NATHAN_NUM")
+NTFY_TOPIC= os.environ.get("NTFY_TOPIC")
 today = datetime.now().date()
 
 
@@ -48,7 +49,8 @@ class PillStock:
         self.dateWhenStockEnds = datetime.now() + timedelta(days=self.numberOfDaysCovered)
 
     def drinkMeds(self):
-        import pywhatkit
+        #import pywhatkit
+        import requests
 
 
         if self.lastFullDose == today:
@@ -56,21 +58,26 @@ class PillStock:
             return
 
         if self.splitDose and self.numberOfDosesTakenToday in (0, 1):
-            pywhatkit.sendwhatmsg_instantly(
-                NATHAN_NUM,
-                f'Nathan drink {self.numberOfPillsPerDay / 2} pills',
-                10
-            )
+            #pywhatkit.sendwhatmsg_instantly(
+            #    NATHAN_NUM,
+            #    f'Nathan drink {self.numberOfPillsPerDay / 2} pills',
+            #    10
+            #)
+            requests.post(str(NTFY_TOPIC), f'Nathan drink {self.numberOfPillsPerDay/2} pills')
+
             self.numberOfDosesTakenToday += 1
             self.updateStock()
             self.recompute()
 
         elif not self.splitDose and self.numberOfDosesTakenToday == 0:
-            pywhatkit.sendwhatmsg_instantly(
-                NATHAN_NUM,
-                f'Nathan drink {self.numberOfPillsPerDay} pills',
-                10
-            )
+            #pywhatkit.sendwhatmsg_instantly(
+            #    NATHAN_NUM,
+            #    f'Nathan drink {self.numberOfPillsPerDay} pills',
+            #    10
+            #)
+
+            requests.post(NTFY_TOPIC, 
+                f'Nathan drink {self.numberOfPillsPerDay} pills')
             self.numberOfDosesTakenToday += 1
             self.updateStock()
             self.recompute()
