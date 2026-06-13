@@ -19,18 +19,19 @@ class PillStock:
         self.dosePerPill = dosePerPill
         self.prescribedDose = prescribedDose
         self.stock = stock
-        self.numberOfPillsPerDay: float = self.prescribedDose / self.dosePerPill
+        self.numberOfPillsPerDay = self.prescribedDose / self.dosePerPill
         self.numberOfDaysCovered = self.stock / self.numberOfPillsPerDay
         self.dateWhenStockEnds = datetime.now() + timedelta(days=self.numberOfDaysCovered)
-        self.numberOfDosesTakenToday: int = 0
+        self.numberOfDosesTakenToday = 0
         self.splitDose = splitDose
-        self.lastFullDose: date = None
+        self.lastFullDose: date | None = None
+        self.lastResetDate: date | None = None
 
     def _resetIfNewDay(self):
-        if self.lastFullDose == None:
-            return
-        if self.lastFullDose < today:
+        today = date.today()
+        if self.lastResetDate != today:
             self.numberOfDosesTakenToday = 0
+            self.lastResetDate = today
 
     def _markFullDoseIfComplete(self):
         if self.splitDose and self.numberOfDosesTakenToday == 2:
