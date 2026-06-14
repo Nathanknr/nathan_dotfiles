@@ -59,10 +59,6 @@ snippet aa "left| right|" iA
 \left| ${1:${VISUAL}} \right| $0
 endsnippet
 
-context "math()"
-snippet ac "accumulation " iA 
-a \left( ${1:t} \right)$
-endsnippet
 
 
 context "math()"
@@ -123,24 +119,6 @@ endsnippet
 ############################################
 
 
-
-
-
-############################################
-# Series + Inequalities
-############################################
-
-snippet "taylor" "Taylor expansion"
-f(x) = f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \dots
-endsnippet
-
-snippet "cs" "Cauchy-Schwarz inequality"
-|\langle x, y \rangle| \le \|x\|\|y\|
-endsnippet
-
-snippet "triineq" "Triangle inequality"
-\|x + y\| \le \|x\| + \|y\|
-endsnippet
 
 snippet ddd "The three dots in latex" A 
 \dots
