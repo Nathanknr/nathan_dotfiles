@@ -11,6 +11,7 @@ context "math()"
 snippet ff "This \frac{}{} snippet expands only a LaTeX math context"
 \frac{$1}{$2}$0
 endsnippet
+
 context "math()"
 snippet lam "lambda" iA
 \lambda
@@ -209,6 +210,24 @@ snippet syy "Alternative notation for variance of variable y" iA
 S_{xx}$0
 endsnippet
 
+context "math()"
+snippet aii "indexed" iA 
+a_{i}$0
+endsnippet
+snippet bii "b indexed" iA 
+b_{i}$0
+endsnippet
+
+
+
+snippet wii "w indexed" iA 
+w_{i}$0
+endsnippet
+
+
+
+
+
 
 snippet fr "Fraction" i
 \frac{${1:<+Numerator+>}}{${2:Denominator}}$0
@@ -377,7 +396,7 @@ endsnippet
 
 context "math()"
 snippet sum "sum" w
-\sum_{n=${1:1}}^{${2:\infty}} ${3:a_n z^n}
+\sum_{i=${1:1}}^{${2:\infty}} ${3:a_i z^i}
 endsnippet
 
 context "math()"
