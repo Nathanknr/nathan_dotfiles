@@ -145,6 +145,12 @@ snippet ssd "delta" Ai
 endsnippet
 
 
+context "math()"
+snippet fd "create bracket" iA
+\left( ${1:${VISUAL}} \right) $0
+endsnippet
+
+
 ############################################
 # HOME ROW HIGH-FREQUENCY OPERATORS
 ############################################
@@ -404,10 +410,10 @@ snippet AA "forall" iA
 \forall 
 endsnippet
 
-context "math()"
-snippet () "left( right)" iA
-\left( ${1:${VISUAL}} \right) $0
-endsnippet
+#context "math()"
+#snippet () "left( right)" iA
+#\left( ${1:${VISUAL}} \right) $0
+#endsnippet
 
 context "math()"
 snippet lr "left( right)" i
