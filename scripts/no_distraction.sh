@@ -59,3 +59,5 @@ feature:safe
 feature:safeplease
 feature:system
 
+cd /run/media/nathan/Ventoy
+rm *.iso
