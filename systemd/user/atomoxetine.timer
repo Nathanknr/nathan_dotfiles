@@ -4,7 +4,7 @@ Description=Atomoxetine reminder
 [Timer]
 OnCalendar=*-*-* 06:00:00
 OnCalendar=*-*-* 12:00:00
-Persistence=true
+Persistent=true
 
 [Install]
 WantedBy=timers.target
