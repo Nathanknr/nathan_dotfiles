@@ -102,13 +102,14 @@ if arg == "init":
         int(sys.argv[4]),
         bool(sys.argv[5])
     )
-    with open("atomoxetine.pkl", "wb") as f:
+    with open("/home/nathan/.local/share/pickle/atomoxetine.pkl", "wb") as f:
         pickle.dump(atomoxetine, f)
     print("Initialized and saved.")
     exit()
 
-with open("atomoxetine.pkl", "rb") as f:
+with open("/home/nathan/.local/share/pickle/atomoxetine.pkl", "rb") as f:
     atomoxetine = pickle.load(f)
+
 
 if arg == "status":
     atomoxetine.status()
@@ -116,5 +117,5 @@ else:
     atomoxetine._resetIfNewDay()
     atomoxetine.drinkMeds()
     atomoxetine._markFullDoseIfComplete()
-    with open("atomoxetine.pkl", "wb") as f:
+    with open("/home/nathan/.local/share/pickle/atomoxetine.pkl", "wb") as f:
         pickle.dump(atomoxetine, f)
