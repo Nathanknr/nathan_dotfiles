@@ -189,7 +189,8 @@ bindsym $mod+Shift+p mode "power"; exec --no-startup-id ~/.config/i3/reminder-po
 
 # study mode [mod + w]
 mode "study" {
-  bindsym p exec kitty fish -c "cd /home/nathan/Resources/Notes && p", mode "defaul"
+  bindsym p exec kitty fish -c "cd /home/nathan/Resources/Notes && pa", mode "default"
+  bindsym n exec kitty fish -c "cd /home/nathan/Resources/Notes/pdf && nvim", mode "default"
   bindsym a exec anki, mode "default"
   bindsym c exec kitty fish --init-command "commandline -i 'fr'", mode "default"
   bindsym s exec kitty fish -c "ww", mode "default"
