@@ -1,6 +1,6 @@
 # ~/.config/fish/functions/p.fish
 
-function p
+function pa
     set open xdg-open
     ag -U -g '.pdf$' \
     | fast-p \
