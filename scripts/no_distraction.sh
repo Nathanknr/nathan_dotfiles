@@ -56,6 +56,8 @@ pluck + block	program:~/.local/share/flatpak/app/org.torproject.torbrowser-launc
 pluck + nofirefox
 pluck + okedge
 pluck + safe
+pluck + block program:/usr/bin/python3.14
+pluck + block program:python3.14 
 pluck + safeplease
 pluck + system
 pluck + system                # enable the system feature (aka level 2)
