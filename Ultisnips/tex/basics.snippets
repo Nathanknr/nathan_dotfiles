@@ -356,9 +356,9 @@ snippet "([^a-zA-Z])trigger" "mm" rA
 `!p snip.rv = match.group(1)`\$${1:${VISUAL:}}\$$0
 endsnippet
 
-snippet "(^|[^a-zA-Z])ff" "\frac{}{}" rA
-`!p snip.rv = match.group(1)`\frac{${1:${VISUAL:}}}{$2}$0
-endsnippet
+#snippet "(^|[^a-zA-Z])ff" "\frac{}{}" rA
+#`!p snip.rv = match.group(1)`\frac{${1:${VISUAL:}}}{$2}$0
+#endsnippet
 
 
 context "math()"
