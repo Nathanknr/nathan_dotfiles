@@ -7,9 +7,37 @@ def math():
   return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 endglobal
 # ----------------------------- #
+snippet ff "Math" wA
+$${1}$`!p
+if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+`$2
+endsnippet
+
 context "math()"
-snippet ff "This \frac{}{} snippet expands only a LaTeX math context"
-\frac{$1}{$2}$0
+snippet sr "^2" iA
+^2
+endsnippet
+
+context "math()"
+snippet cb "^3" iA
+^3
+endsnippet
+
+context "math()"
+snippet td "to the ... power" iA
+^{$1}$0
+endsnippet
+
+
+
+
+
+context "math()"
+snippet rd "to the ... power" iA
+^{($1)}$0
 endsnippet
 
 context "math()"
