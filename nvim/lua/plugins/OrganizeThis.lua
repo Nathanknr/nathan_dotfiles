@@ -4,27 +4,19 @@ return {
 		lazy = false,
 		init = function()
 			vim.g.vimtex_view_method = "zathura"
-			vim.g.tex_conceal = "abdmg"
-			vim.g.vimtex_syntax_enabled = 1 -- keep vimtex's own syntax on
-			vim.g.vimtex_syntax_conceal_disable = 0 -- keep conceal working
+			vim.g.vimtex_syntax_enabled = 1
+			vim.g.vimtex_syntax_conceal_disable = 0
 
-			local save_timer = nil
-
+			local save_timer = vim.uv.new_timer() -- create once, reuse forever
 			vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
 				pattern = "*.tex",
 				callback = function()
-					if save_timer then
-						save_timer:stop()
-						save_timer:close()
-					end
-					save_timer = vim.uv.new_timer()
+					save_timer:stop() -- cheap, just resets the timer's internal state
 					save_timer:start(
 						500,
 						0,
 						vim.schedule_wrap(function()
 							vim.cmd("silent! write")
-							save_timer:close()
-							save_timer = nil
 						end)
 					)
 				end,
