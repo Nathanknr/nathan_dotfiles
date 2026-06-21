@@ -38,6 +38,10 @@ snippet yjj "yj" iA
 y_{j}
 endsnippet
 
+context "math()"
+snippet phi "phi" iA
+\phi
+endsnippet
 
 context "math()"
 snippet xp1 "x" iA
@@ -393,9 +397,9 @@ endsnippet
 
 
 
-snippet "([^a-zA-Z])trigger" "mm" rA
-`!p snip.rv = match.group(1)`\$${1:${VISUAL:}}\$$0
-endsnippet
+#snippet "([^a-zA-Z])trigger" "mm" rA
+#`!p snip.rv = match.group(1)`\$${1:${VISUAL:}}\$$0
+#endsnippet
 
 #snippet "(^|[^a-zA-Z])ff" "\frac{}{}" rA
 #`!p snip.rv = match.group(1)`\frac{${1:${VISUAL:}}}{$2}$0
@@ -427,10 +431,10 @@ snippet tan "tan" iA
 \tan\left(${1:${VISUAL:}}\right)$0
 endsnippet
 
-context "math()"
-snippet "(\S+)fa" "f(x) function evaluation" rA
-f(`!p snip.rv = match.group(1)`)$0
-endsnippet
+#context "math()"
+#snippet "(\S+)fa" "f(x) function evaluation" rA
+#f(`!p snip.rv = match.group(1)`)$0
+#endsnippet
 
 snippet koma "Template for Koma document" 
 \documentclass{scrartcl}
