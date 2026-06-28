@@ -7,6 +7,15 @@ def math():
   return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 endglobal
 # ----------------------------- #
+snippet meta "metacognitive questions"
+\begin{itemize}
+	\item What exactly are you doing? (Can you describe it precisely?)
+	\item Why are you doing it?
+	\item How does it help you? (What will you do with the outcome once you obtain it?)
+\end{itemize}
+$0
+endsnippet
+
 context "math()"
 snippet xnn "xn" iA
 x_{n}
