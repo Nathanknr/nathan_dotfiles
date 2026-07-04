@@ -64,7 +64,11 @@ class PillStock:
             #    f'Nathan drink {self.numberOfPillsPerDay / 2} pills',
             #    10
             #)
-            requests.post(str(NTFY_TOPIC), f'Nathan drink {self.numberOfPillsPerDay/2} pills')
+            try :
+                requests.post(str(NTFY_TOPIC), f'Nathan drink {self.numberOfPillsPerDay/2} pills')
+            except Exception as e:
+                print(f"Failed to send push notification: {e}")
+                pass
 
             self.numberOfDosesTakenToday += 1
             self.updateStock()
