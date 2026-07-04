@@ -71,6 +71,11 @@ else:
 endsnippet
 
 context "math()"
+snippet "([^a-zA-Z0-9\\])eqq" "\equiv" rA
+`!p snip.rv = match.group(1)`\equiv 
+endsnippet
+
+context "math()"
 snippet sr "^2" iA
 ^2
 endsnippet
