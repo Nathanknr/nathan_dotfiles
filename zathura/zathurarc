@@ -13,3 +13,9 @@ set scroll-step 100
 #zoom settings
 set zoom-min 10
 set guioptions ""
+
+set selection-clipboard clipboard
+
+map e exec "sh -c 'kitty --working-directory=\"$(dirname $FILE)\"'"
+map b exec "sh -c 'thunar \"$(dirname $FILE)\"'"
+map z exec "sh -c 'zathura \"$FILE\"'"
