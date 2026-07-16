@@ -108,6 +108,16 @@ snippet "(^[+-]?(\d+(\.\d*)?|\.\d+)$)wr" "wrap number in math mode"  rA
 $`!p snip.rv = match.group(1)`$
 endsnippet
 
+context "math()"
+snippet "([\W_\\])ha" "\hat" rA
+`!p snip.rv = match.group(1)`\hat{${1:${VISUAL:}}}$0
+endsnippet
+
+context "math()"
+snippet "([\W_\\])bb" "\bar" rA
+`!p snip.rv = match.group(1)`\bar{${1:${VISUAL:}}}$0
+endsnippet
+
 snippet RR "real" iA
 \RR
 endsnippet
