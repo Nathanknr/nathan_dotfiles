@@ -40,22 +40,29 @@ class Scheduler:
 
 def loadOrCreate():
     if os.path.exists("nathan.pkl"):
-        with open("nathan.pkl", "rb") as f:
+        with open("/home/nathan/.local/share/nathan.pkl", "rb") as f:
             return pickle.load(f)
     elif sys.argv[1] == "waiting":
         return Scheduler('waiting')
     else:
         return Scheduler(status='received', lastDateSent=datetime.now())
 
+def updateLastDateSent(self,day):
+    self.lastDateSent = day
+    self.dueDate = day + self.interval
+
+
+    
 arg = sys.argv[1] if len(sys.argv) > 1 else None
 nathan = loadOrCreate()
 
 if arg == 'received':
     nathan.moneyReceived()
-else:
+else if arg == 'update':
+    nathan.updateLastDateSent()
     nathan.statusChange()
 
 
 
-with open("nathan.pkl", "wb") as f:
+with open("/home/nathan/.local/share/nathan.pkl", "wb") as f:
     pickle.dump(nathan, f)
