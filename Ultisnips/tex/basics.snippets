@@ -189,6 +189,11 @@ snippet set "set" wA
 endsnippet
 
 
+priority 300
+context "math()"
+snippet dint "integral" wA
+\int_{${1:-\infty}}^{${2:\infty}} ${3:${VISUAL}} $0
+endsnippet
 
 
 
@@ -455,6 +460,12 @@ context "math()"
 snippet fa "f(x) since ff is already taken" Ai
 f(x)
 endsnippet
+
+context "math()"
+snippet fy "f(y) since ff is already taken" Ai
+f(y)
+endsnippet
+
 
 context "math()"
 snippet sin "sin" iA
