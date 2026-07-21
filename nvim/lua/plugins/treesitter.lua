@@ -9,6 +9,8 @@ return {
 				"c",
 				"html",
 				"lua",
+				"css",
+				"javascript",
 				"markdown",
 				"vim",
 				"vimdoc",
