@@ -173,6 +173,7 @@ bindsym $mod+Shift+b exec --no-startup-id ~/.config/i3/start_break.sh
 exec --no-startup-id task next > /dev/null 2>&1
 exec --no-startup-id task all > /dev/null 2>&1
 exec --no-startup-id ~/.config/scripts/morning_start_up > /dev/null 2>&1
+exec --no-startup-id redshift
 
 # Here we configure various modes
 
