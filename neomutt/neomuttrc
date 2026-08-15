@@ -1,0 +1,42 @@
+set mbox_type = Maildir
+set mail_check = 60
+set edit_headers = yes
+set include
+set sidebar_visible = yes
+set editor = "nvim"
+set sort = 'reverse-date'
+set mailcap_path = "/home/nathan/.config/neomutt/mailcap"
+
+auto_view text/html
+alternative_order text/html text/plain 
+
+# Load Personal account by default
+source ~/.config/neomutt/gmail.muttrc
+
+named-mailboxes "Personal Inbox" "/home/nathan/.mail/gmail/Inbox"
+named-mailboxes "Sent P"          "/home/nathan/.mail/gmail/[Gmail]/Sent Mail"
+named-mailboxes "Drafts P"        "/home/nathan/.mail/gmail/[Gmail]/Drafts"
+named-mailboxes "Trash P"         "/home/nathan/.mail/gmail/[Gmail]/Trash"
+
+
+named-mailboxes "School Inbox" "/home/nathan/.mail/school/Inbox"
+named-mailboxes "Sent S"         "/home/nathan/.mail/school/[Gmail]/Sent Mail"
+named-mailboxes "Drafts S"       "/home/nathan/.mail/school/[Gmail]/Drafts"
+named-mailboxes "Trash S"        "/home/nathan/.mail/school/[Gmail]/Trash"
+
+
+folder-hook /home/nathan/.mail/gmail/* \
+    'source ~/.config/neomutt/gmail.muttrc'
+
+folder-hook /home/nathan/.mail/school/* \
+    'source ~/.config/neomutt/school.muttrc'
+
+# Quick account switching
+
+macro index,pager <F2> \
+    '<sync-mailbox><enter-command>source ~/.config/neomutt/gmail.muttrc<enter><change-folder>/home/nathan/.mail/gmail/Inbox<enter>' \
+    "Switch to Personal"
+
+macro index,pager <F3> \
+    '<sync-mailbox><enter-command>source ~/.config/neomutt/school.muttrc<enter><change-folder>/home/nathan/.mail/school/Inbox<enter>' \
+    "Switch to School"

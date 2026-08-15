@@ -1,0 +1,8 @@
+set from = `echo -n $SCHOOL_EMAIL` 
+set realname = "Nathan Kamgang"
+set sendmail = "/usr/bin/msmtp -a school"
+set folder = "~/.mail/school"
+set spoolfile = "+Inbox"
+set record = "+[Gmail]/Sent Mail"
+set postponed = "+[Gmail]/Drafts"
+set trash = "+[Gmail]/Trash"

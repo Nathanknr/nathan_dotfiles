@@ -1,0 +1,8 @@
+set from = `echo -n $PERSONAL_EMAIL`
+set realname = "Nathan Kamgang"
+set sendmail = "/usr/bin/msmtp -a gmail"
+set folder = "~/.mail/gmail"
+set spoolfile = "+Inbox"
+set record = "+[Gmail]/Sent Mail"
+set postponed = "+[Gmail]/Drafts"
+set trash = "+[Gmail]/Trash"
