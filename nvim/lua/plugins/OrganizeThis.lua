@@ -74,7 +74,7 @@ return {
 		{
 			"SirVer/ultisnips",
 			event = "InsertEnter",
-			lazy = false,
+
 			init = function()
 				vim.g.UltiSnipsSnippetDirectories = { "/home/nathan/.config/Ultisnips" }
 				vim.g.UltiSnipsExpandTrigger = "<tab>"
