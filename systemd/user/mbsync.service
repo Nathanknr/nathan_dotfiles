@@ -1,0 +1,7 @@
+# ~/.config/systemd/user/mbsync.service
+[Unit]
+Description=mbsync
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/fish -c "mbsync gmail & mbsync school & wait"
