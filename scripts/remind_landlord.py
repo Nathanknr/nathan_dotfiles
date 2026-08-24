@@ -5,55 +5,56 @@ nathan-scheduler
 
 Recurring payment reminder scheduler backed by SQLite.
 
-Tracks a single recurring due date (interval: 29 days, 7 hours). When the
-due date passes, sends a WhatsApp message (via pywhatkit) and an ntfy.sh
-push notification, then rolls the due date forward. Intended to be run
-periodically (e.g. from a cron job or systemd timer) with no arguments,
-and manually with 'received' or 'update' when state needs to change.
+Tracks a single recurring due date (interval: 29 days, 7 hours).
 
-State is stored in:
+Commands
+--------
+    scheduler.py
+        Check whether the current due date has passed.
+        If it has, send the reminder and schedule the next due date.
+
+    scheduler.py received
+        Mark the payment as received now and schedule the next due date.
+        Does NOT send a reminder.
+
+    scheduler.py update
+        Reset lastDateSent to now, calculate a new due date, and check
+        whether that newly calculated due date has already passed.
+
+    scheduler.py update 2026-08-15
+        Set lastDateSent to the specified date, calculate the new due date,
+        and check whether that newly calculated due date has already passed.
+
+State
+-----
     ~/.local/share/nathan-scheduler/scheduler.db
 
-Environment variables (loaded from a .env file in the working directory):
-    AROKIUM_NUM   WhatsApp number to send the reminder to
-    AROKIUM_MSG   Reminder message text (use literal \\n for newlines)
-    NATHAN_NUM    (reserved, currently unused by the script logic)
-    NTFY_TOPIC    Full ntfy.sh topic URL to POST the reminder to
+Environment variables
+---------------------
+    AROKIUM_NUM
+        WhatsApp number to send the reminder to.
 
-Usage
------
-    scheduler.py                       Check if due date has passed; if so,
-                                        send the reminder and roll the date
-                                        forward. No-op otherwise. This is the
-                                        command to run on a schedule.
+    AROKIUM_MSG
+        Reminder message. Literal "\\n" is converted to a newline.
 
-    scheduler.py received              Mark payment as received right now
-                                        and reset the due date to
-                                        now + interval.
+    NATHAN_NUM
+        Reserved for future use.
 
-    scheduler.py update                Reset lastDateSent to right now and
-                                        recompute the due date from it.
+    NTFY_TOPIC
+        Full ntfy.sh topic URL.
 
-    scheduler.py update 2026-08-15     Set lastDateSent to a specific date
-                                        (format: YYYY-MM-DD) and recompute
-                                        the due date from it.
+Examples
+--------
+    scheduler.py
+    scheduler.py received
+    scheduler.py update
+    scheduler.py update 2026-08-15
 
 Exit codes
 ----------
     0   Success
-    2   Bad input (e.g. invalid date format, unrecognized command)
-
-Examples
---------
-    # Run silently from a systemd timer / cron every few hours:
-    $ scheduler.py
-
-    # Nathan tells the script the payment came in today:
-    $ scheduler.py received
-
-    # Backdate the last payment to a specific day (e.g. correcting a
-    # missed run):
-    $ scheduler.py update 2026-08-15
+    2   Bad command-line input
+    1   Runtime/notification error
 """
 
 import argparse
@@ -63,36 +64,42 @@ from datetime import datetime, timedelta
 
 from dotenv import load_dotenv
 
+
+# ---------------------------------------------------------------------------
+# Configuration
+# ---------------------------------------------------------------------------
+
 load_dotenv()
+
 AROKIUM_NUM = os.environ.get("AROKIUM_NUM")
-AROKIUM_MSG = os.environ.get("AROKIUM_MSG").replace("\\n", "\n")
-NATHAN_NUM = os.environ.get("NATHAN_NUM")
+AROKIUM_MSG = os.environ.get("AROKIUM_MSG", "").replace("\\n", "\n")
+NATHAN_NUM = os.environ.get("NATHAN_NUM")  # Reserved for future use.
 NTFY_TOPIC = os.environ.get("NTFY_TOPIC")
 
 DATA_DIR = os.path.expanduser("~/.local/share/nathan-scheduler")
 DB_PATH = os.path.join(DATA_DIR, "scheduler.db")
 
-# Format used to store datetimes in SQLite (which has no native datetime type).
 DATE_FMT = "%Y-%m-%d %H:%M:%S.%f"
-# Format accepted from the user on the command line (date only, no time).
 DATE_ARG_FMT = "%Y-%m-%d"
 
 
-def get_connection():
-    """
-    Open (creating if necessary) the scheduler's SQLite database.
+# ---------------------------------------------------------------------------
+# Database
+# ---------------------------------------------------------------------------
 
-    Creates DATA_DIR and the 'users' / 'scheduler' tables on first run.
-    Safe to call every time the script runs; existing data is left as-is.
-    """
+def get_connection():
+    """Open the SQLite database and create tables if necessary."""
     os.makedirs(DATA_DIR, exist_ok=True)
+
     conn = sqlite3.connect(DB_PATH)
+
     conn.execute("""
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL
+            name TEXT NOT NULL UNIQUE
         )
     """)
+
     conn.execute("""
         CREATE TABLE IF NOT EXISTS scheduler (
             id INTEGER PRIMARY KEY CHECK (id = 1),
@@ -103,30 +110,36 @@ def get_connection():
             FOREIGN KEY (userId) REFERENCES users(id)
         )
     """)
+
     conn.commit()
     return conn
 
 
+# ---------------------------------------------------------------------------
+# User
+# ---------------------------------------------------------------------------
+
 class User:
-    """A named user, looked up or created in the 'users' table."""
+    """Represents a user stored in the database."""
 
     def __init__(self, name, conn=None, id=None):
-        """
-        Args:
-            name: Display name for the user.
-            conn: Open sqlite3 connection. If given and id is None, looks
-                up the user by name, creating a row if none exists.
-            id: Known user id (skips the DB lookup/creation above).
-        """
         self.name = name
         self.id = id
+
         if self.id is None and conn is not None:
-            cur = conn.execute("SELECT id FROM users WHERE name = ?", (name,))
+            cur = conn.execute(
+                "SELECT id FROM users WHERE name = ?",
+                (name,)
+            )
             row = cur.fetchone()
+
             if row:
                 self.id = row[0]
             else:
-                cur = conn.execute("INSERT INTO users (name) VALUES (?)", (name,))
+                cur = conn.execute(
+                    "INSERT INTO users (name) VALUES (?)",
+                    (name,)
+                )
                 conn.commit()
                 self.id = cur.lastrowid
 
@@ -134,62 +147,140 @@ class User:
         return self.id
 
 
-class Scheduler:
-    """
-    Tracks a single recurring due date for one user.
+# ---------------------------------------------------------------------------
+# Scheduler
+# ---------------------------------------------------------------------------
 
-    The single row of state lives in the 'scheduler' table (id fixed at 1),
-    since this script only ever tracks one schedule at a time.
-    """
+class Scheduler:
+    """Manage the single recurring payment schedule."""
 
     interval = timedelta(days=29, hours=7)
 
-    def __init__(self, user, status=None, lastDateSent=None, dueDate=None):
+    def __init__(
+        self,
+        user,
+        status=None,
+        lastDateSent=None,
+        dueDate=None,
+    ):
         self.status = status
         self.lastDateSent = lastDateSent or datetime.now()
-        self.dueDate = dueDate or (self.lastDateSent + self.interval)
+        self.dueDate = dueDate or (
+            self.lastDateSent + self.interval
+        )
         self.userId = user.getId()
 
+    # -----------------------------------------------------------------------
+    # Date handling
+    # -----------------------------------------------------------------------
+
     def updateDueDate(self):
-        """Reset lastDateSent to now and push dueDate forward by interval."""
-        self.lastDateSent = datetime.now()
-        self.dueDate = datetime.now() + self.interval
+        """
+        Reset the schedule from now.
+
+        The exact same timestamp is used as the base for both values.
+        """
+        now = datetime.now()
+        self.lastDateSent = now
+        self.dueDate = now + self.interval
 
     def updateLastDateSent(self, day=None):
         """
-        Set lastDateSent to a specific datetime (or now, if none given)
-        and recompute dueDate from it.
+        Set lastDateSent to a supplied datetime or now, then calculate
+        the corresponding due date.
         """
         self.lastDateSent = day or datetime.now()
         self.dueDate = self.lastDateSent + self.interval
 
+    # -----------------------------------------------------------------------
+    # Reminder handling
+    # -----------------------------------------------------------------------
+
+    def sendReminder(self):
+        """Send the WhatsApp and ntfy notifications."""
+        if not AROKIUM_NUM:
+            raise RuntimeError(
+                "AROKIUM_NUM is not set in the environment."
+            )
+
+        if not AROKIUM_MSG:
+            raise RuntimeError(
+                "AROKIUM_MSG is not set in the environment."
+            )
+
+        if not NTFY_TOPIC:
+            raise RuntimeError(
+                "NTFY_TOPIC is not set in the environment."
+            )
+
+        import pywhatkit
+        import requests
+
+        # WhatsApp reminder.
+        pywhatkit.sendwhatmsg_instantly(
+            AROKIUM_NUM,
+            AROKIUM_MSG,
+            10,
+        )
+
+        # ntfy reminder.
+        response = requests.post(
+            NTFY_TOPIC,
+            data=AROKIUM_MSG.encode("utf-8"),
+            timeout=15,
+        )
+
+        response.raise_for_status()
+
     def statusChange(self):
         """
-        Check whether the due date has passed. If it has, send the
-        WhatsApp reminder and ntfy notification, mark status as
-        'waiting', and roll the due date forward. No-op if the due
-        date hasn't arrived yet, or if already waiting and not yet due.
-        """
-        if self.status == 'waiting' and datetime.now() < self.dueDate:
-            return
-        elif datetime.now() >= self.dueDate:
-            import pywhatkit
-            import requests
-            self.status = 'waiting'
-            pywhatkit.sendwhatmsg_instantly(AROKIUM_NUM, AROKIUM_MSG, 10)
-            requests.post(NTFY_TOPIC, AROKIUM_MSG)
-            self.updateDueDate()
+        Check the current due date.
 
-    def moneyReceived(self, status):
-        """Mark payment as received and reset the due date."""
-        self.status = status
+        If dueDate has passed:
+            - send the reminder
+            - mark status as waiting
+            - roll the schedule forward from now
+
+        Otherwise, do nothing.
+        """
+        now = datetime.now()
+
+        if now < self.dueDate:
+            return False
+
+        # The payment is overdue, so send the reminder.
+        self.sendReminder()
+
+        self.status = "waiting"
         self.updateDueDate()
 
+        return True
+
+    def moneyReceived(self):
+        """
+        Mark payment as received now.
+
+        This never sends a reminder.
+        """
+        self.status = "received"
+        self.updateDueDate()
+
+    # -----------------------------------------------------------------------
+    # Persistence
+    # -----------------------------------------------------------------------
+
     def save(self, conn):
-        """Persist current state to the 'scheduler' table (upsert)."""
+        """Save current scheduler state to SQLite."""
         conn.execute("""
-            INSERT INTO scheduler (id, status, lastDateSent, dueDate, userId)
+            INSERT INTO scheduler (
+                id,
+                status,
+                lastDateSent,
+                dueDate,
+                userId
+            )
             VALUES (1, ?, ?, ?, ?)
+
             ON CONFLICT(id) DO UPDATE SET
                 status = excluded.status,
                 lastDateSent = excluded.lastDateSent,
@@ -201,111 +292,222 @@ class Scheduler:
             self.dueDate.strftime(DATE_FMT),
             self.userId,
         ))
+
         conn.commit()
 
     @classmethod
     def load(cls, conn):
-        """Load existing state from the 'scheduler' table, or None if absent."""
-        cur = conn.execute("SELECT status, lastDateSent, dueDate, userId FROM scheduler WHERE id = 1")
+        """Load the scheduler state from SQLite."""
+        cur = conn.execute("""
+            SELECT status, lastDateSent, dueDate, userId
+            FROM scheduler
+            WHERE id = 1
+        """)
+
         row = cur.fetchone()
+
         if row is None:
             return None
+
         status, lastDateSent, dueDate, userId = row
-        user = User(name="Nathan", conn=conn, id=userId)
+
+        user = User(
+            name="Nathan",
+            conn=conn,
+            id=userId,
+        )
+
         return cls(
             user,
             status=status,
-            lastDateSent=datetime.strptime(lastDateSent, DATE_FMT),
-            dueDate=datetime.strptime(dueDate, DATE_FMT),
+            lastDateSent=datetime.strptime(
+                lastDateSent,
+                DATE_FMT,
+            ),
+            dueDate=datetime.strptime(
+                dueDate,
+                DATE_FMT,
+            ),
         )
 
 
-def loadOrCreate(conn, initial_status=None):
-    """
-    Load the existing Scheduler from the database, or create a fresh one
-    if this is the first run.
+# ---------------------------------------------------------------------------
+# Loading / initialization
+# ---------------------------------------------------------------------------
 
-    Args:
-        conn: Open sqlite3 connection.
-        initial_status: Status to use only when creating a brand-new
-            Scheduler (ignored if one already exists in the database).
-    """
+def loadOrCreate(conn):
+    """Load existing scheduler or create a new one."""
     existing = Scheduler.load(conn)
+
     if existing is not None:
         return existing
 
     user = User("Nathan", conn=conn)
-    if initial_status == "waiting":
-        return Scheduler(user, status='waiting')
-    else:
-        return Scheduler(user, status='received', lastDateSent=datetime.now())
 
+    # First run:
+    # payment is considered received now, so the first due date is
+    # now + 29 days + 7 hours.
+    scheduler = Scheduler(
+        user,
+        status="received",
+    )
+
+    scheduler.save(conn)
+
+    return scheduler
+
+
+# ---------------------------------------------------------------------------
+# CLI
+# ---------------------------------------------------------------------------
 
 def build_parser():
-    """Construct the argparse CLI parser with subcommands and help text."""
+    """Construct the command-line parser."""
     parser = argparse.ArgumentParser(
         prog="scheduler.py",
-        description="Recurring payment reminder scheduler (SQLite-backed).",
+        description=(
+            "Recurring payment reminder scheduler "
+            "(SQLite-backed)."
+        ),
         epilog=(
             "Examples:\n"
-            "  scheduler.py                     Check due date, send reminder if due\n"
-            "  scheduler.py received            Mark payment as received now\n"
-            "  scheduler.py update              Reset last-sent date to now\n"
-            "  scheduler.py update 2026-08-15   Set last-sent date to a specific day\n"
+            "  scheduler.py\n"
+            "      Check the existing due date.\n\n"
+
+            "  scheduler.py received\n"
+            "      Mark payment as received now and reset the due date.\n\n"
+
+            "  scheduler.py update\n"
+            "      Set lastDateSent to now, calculate a new due date,\n"
+            "      and check whether that new due date has passed.\n\n"
+
+            "  scheduler.py update 2026-08-15\n"
+            "      Set lastDateSent to the specified date, calculate\n"
+            "      the new due date, and check whether it has passed."
         ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    subparsers = parser.add_subparsers(dest="command")
+
+    subparsers = parser.add_subparsers(
+        dest="command"
+    )
 
     subparsers.add_parser(
         "received",
-        help="Mark payment as received now and reset the due date.",
+        help=(
+            "Mark payment as received now and reset the due date. "
+            "Does not send a reminder."
+        ),
     )
 
     update_parser = subparsers.add_parser(
         "update",
-        help="Reset the last-sent date (to now, or to a given day) and re-check due date.",
+        help=(
+            "Recalculate the due date from a new lastDateSent value "
+            "and check whether the new due date has passed."
+        ),
     )
+
     update_parser.add_argument(
         "date",
         nargs="?",
         default=None,
-        help=f"Optional date in {DATE_ARG_FMT.replace('%', '%%')} format (e.g. 2026-08-15). "
-             "Defaults to right now if omitted.",
+        help=(
+            "Optional date in YYYY-MM-DD format. "
+            "Defaults to now."
+        ),
     )
 
     return parser
 
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
 def main():
     parser = build_parser()
     args = parser.parse_args()
 
     conn = get_connection()
-    nathan = loadOrCreate(conn, initial_status=args.command)
 
-    if args.command == 'received':
-        nathan.moneyReceived(args.command)
-        print("Marked as received. Due date reset.")
-    elif args.command == 'update':
-        day = None
-        if args.date is not None:
-            try:
-                day = datetime.strptime(args.date, DATE_ARG_FMT)
-            except ValueError:
-                parser.error(
-                    f"invalid date '{args.date}', expected format {DATE_ARG_FMT} (e.g. 2026-08-15)"
+    try:
+        scheduler = loadOrCreate(conn)
+
+        # ---------------------------------------------------------------
+        # received
+        # ---------------------------------------------------------------
+        if args.command == "received":
+            scheduler.moneyReceived()
+            scheduler.save(conn)
+
+            print(
+                "Marked as received.\n"
+                f"Last payment: {scheduler.lastDateSent}\n"
+                f"Next due date: {scheduler.dueDate}"
+            )
+
+        # ---------------------------------------------------------------
+        # update
+        # ---------------------------------------------------------------
+        elif args.command == "update":
+            day = None
+
+            if args.date is not None:
+                try:
+                    day = datetime.strptime(
+                        args.date,
+                        DATE_ARG_FMT,
+                    )
+                except ValueError:
+                    parser.error(
+                        f"invalid date '{args.date}', "
+                        f"expected format YYYY-MM-DD "
+                        f"(e.g. 2026-08-15)"
+                    )
+
+            # First calculate the NEW due date.
+            scheduler.updateLastDateSent(day)
+
+            print(
+                f"Last payment date: {scheduler.lastDateSent}\n"
+                f"New due date:      {scheduler.dueDate}"
+            )
+
+            # Then check ONLY this newly calculated due date.
+            reminder_sent = scheduler.statusChange()
+
+            if reminder_sent:
+                print("New due date has already passed. Reminder sent.")
+            else:
+                print("New due date has not passed. No reminder sent.")
+
+            scheduler.save(conn)
+
+        # ---------------------------------------------------------------
+        # no command
+        # ---------------------------------------------------------------
+        else:
+            reminder_sent = scheduler.statusChange()
+
+            if reminder_sent:
+                print("Due date passed. Reminder sent.")
+            else:
+                print(
+                    f"Not due yet. Due date: {scheduler.dueDate}"
                 )
-        nathan.updateLastDateSent(day)
-        nathan.statusChange()
-        print(f"Last-sent date updated to {nathan.lastDateSent}. "
-              f"Due date is now {nathan.dueDate}.")
-    else:
-        nathan.statusChange()
 
-    nathan.save(conn)
-    conn.close()
+            scheduler.save(conn)
+
+    finally:
+        conn.close()
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        raise SystemExit(130)
+    except Exception as exc:
+        print(f"Error: {exc}")
+        raise SystemExit(1)
