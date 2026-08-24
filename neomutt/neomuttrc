@@ -40,3 +40,39 @@ macro index,pager <F2> \
 macro index,pager <F3> \
     '<sync-mailbox><enter-command>source ~/.config/neomutt/school.muttrc<enter><change-folder>/home/nathan/.mail/school/Inbox<enter>' \
     "Switch to School"
+
+#Bindings
+
+bind pager g noop
+bind index g noop
+
+bind pager i noop
+
+bind pager j next-line
+bind pager k previous-line
+bind pager <down> next-line
+bind pager <up> previous-line
+bind pager J next-undeleted
+bind pager K previous-undeleted
+bind pager <enter> next-undeleted
+bind pager gg top
+bind pager G bottom
+bind generic,pager d half-down
+bind generic,pager u half-up
+
+bind index d display-message
+bind index gg first-entry
+bind index G last-entry
+bind index j next-entry
+bind index k previous-entry
+bind index J next-thread
+bind index K previous-thread
+
+bind index,pager c mail
+bind index,pager C compose-to-sender
+bind index,pager r reply
+bind index,pager a group-reply
+macro index,pager A "<pipe-message>abook --add-email-quiet<enter>" "Add to contacts"
+macro index,pager V <pipe-message>urlscan<enter>
+
+
