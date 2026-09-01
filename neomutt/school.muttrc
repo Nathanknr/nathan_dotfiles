@@ -3,7 +3,7 @@ set realname = "Nathan Kamgang"
 set sendmail = "/usr/bin/msmtp -a school"
 set folder = "~/.mail/school"
 set spoolfile = "+Inbox"
-set record = "+[Gmail]/Sent Mail"
+unset record
 set postponed = "+[Gmail]/Drafts"
 set trash = "+[Gmail]/Trash"
 set header_cache = "~/.cache/neomutt/university/headers"
