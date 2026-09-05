@@ -33,7 +33,7 @@ alias.someday=+someday
 
 #include server.taskrc
 
-report.list.filter=project.not:Inbox and project.not:someday status:pending -WAITING and tag.not:inbox tag.not:someday
+report.list.filter=project.not:Inbox and project.not:someday status:pending -WAITING and tag.not:inbox tag.not:someday tag.not:birthday
 uda.reviewed.type=date
 uda.reviewed.label=Reviewed
 report._reviewed.description=Tasksh review report.  Adjust the filter to your needs.
