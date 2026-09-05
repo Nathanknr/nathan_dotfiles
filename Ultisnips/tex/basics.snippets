@@ -16,6 +16,9 @@ snippet meta "metacognitive questions"
 $0
 endsnippet
 
+snippet OO "emptyset" iA
+\O
+endsnippet
 
 context "math()"
 snippet cc "subset" Ai
@@ -23,11 +26,15 @@ snippet cc "subset" Ai
 endsnippet
 
 context "math()"
-snippet ker "kernel of a map T" i
-\text{Ker } T
+snippet CC "Complex Plane" Ai
+\mathbb{C}
 endsnippet
 
 
+context "math()"
+snippet ker "kernel of a map T" i
+\text{Ker } T
+endsnippet
 
 context "math()"
 snippet "([\w]+)sb" "subscript" ri
@@ -148,6 +155,14 @@ endsnippet
 context "math()"
 snippet "([\W_\\])bb" "\bar" rA
 `!p snip.rv = match.group(1)`\bar{${1:${VISUAL:}}}$0
+endsnippet
+
+snippet UU "cup" iA
+\cup 
+endsnippet
+
+snippet uuu "bigcup" iA
+\bigcup_{${1:i \in ${2: I}}} $0
 endsnippet
 
 snippet RR "real" iA
@@ -621,6 +636,25 @@ context "math()"
 snippet '(?<!\\)(sin|cos|cot|csc|sec)' "auto-backslash math functions" rA
 \\`!p snip.rv = match.group(1)`\left( $1\right)$0
 endsnippet
+
+priority 1000
+context "math()"
+snippet snh "hyperbolic sin" iA
+\sinh\left($1 \right)$0
+endsnippet
+
+priority 1000
+context "math()"
+snippet csh "hyperbolic cos" iA
+\cosh\left($1 \right)$0
+endsnippet
+
+priority 1000
+context "math()"
+snippet tnh "hyperbolic cos" iA
+\tanh\left($1 \right)$0
+endsnippet
+
 
 
 
