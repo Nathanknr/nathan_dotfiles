@@ -24,12 +24,12 @@ do_link() {
 
 link_dot_path() {
   mkdir -p "$(dirname "$HOME/.$1")"
-  do_link "$HOME/dotfiles/home/$1" "$HOME/.$1"
+  do_link "$HOME/nathan_dotfiles/home/$1" "$HOME/.$1"
 }
 
 link_hidden_path() {
   mkdir -p "$(dirname "$HOME/.$1")"
-  do_link "$HOME/dotfiles/dotconfig/$1" "$HOME/.$1"
+  do_link "$HOME/nathan_dotfiles/dotconfig/$1" "$HOME/.$1"
 }
 
 cd "$HOME" || exit 1
@@ -48,9 +48,6 @@ link_dot_path taskrc
 #link_dot_path xprofile
 
 link_dot_path abook
-link_dot_path claude/settings.json
-link_dot_path jupyter/jupyter_notebook_config.py
-link_dot_path vit
 
 #link_hidden_path config/bat
 #link_hidden_path config/biome
