@@ -29,7 +29,7 @@ link_dot_path() {
 
 link_hidden_path() {
   mkdir -p "$(dirname "$HOME/.$1")"
-  do_link "$HOME/nathan_dotfiles/dotconfig/$1" "$HOME/.$1"
+  do_link "$HOME/nathan_dotfiles/$1" "$HOME/.$1"
 }
 
 cd "$HOME" || exit 1
