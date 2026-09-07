@@ -1,0 +1,34 @@
+test -s ~/.alias && . ~/.alias || true
+. "$HOME/.cargo/env"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/nathan/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/nathan/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/nathan/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/nathan/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+. "$HOME/.local/share/../bin/env"
+
+# p  () {
+#    open=zathura
+#    ag -U -g ".pdf$" \
+#    | fast-p \
+#    | fzf --read0 --reverse -e -d $'\t'  \
+#        --preview-window down:80% --preview '
+#            v=$(echo {q} | tr " " "|"); 
+#            echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;
+#        ' \
+#    | cut -z -f 1 -d $'\t' | tr -d '\n' | xargs -r --null $open > /dev/null 2> /dev/null
+#}
+
+
