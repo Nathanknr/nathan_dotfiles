@@ -1,0 +1,48 @@
+IMAPAccount gmail
+Host imap.gmail.com
+User nathankamgangmel@gmail.com
+PassCmd "python3 /usr/share/neomutt/oauth2/mutt_oauth2.py ~/.mutt/gmail.oauth2"
+AuthMechs XOAUTH2
+TLSType IMAPS
+PipelineDepth 50
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/.mail/gmail/
+Inbox ~/.mail/gmail/Inbox
+SubFolders Verbatim
+
+Channel gmail
+Far :gmail-remote:
+Near :gmail-local:
+Patterns * !"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Chats"
+Create Both
+Expunge Both
+SyncState *
+
+IMAPAccount school
+Host imap.gmail.com
+User nathan.kamgang@umail.uom.ac.mu
+PassCmd "python3 /usr/share/neomutt/oauth2/mutt_oauth2.py ~/.mutt/school.oauth2"
+AuthMechs XOAUTH2
+TLSType IMAPS
+PipelineDepth 50
+
+IMAPStore school-remote
+Account school
+
+MaildirStore school-local
+Path ~/.mail/school/
+Inbox ~/.mail/school/Inbox
+SubFolders Verbatim
+
+Channel school
+Far :school-remote:
+Near :school-local:
+Patterns * !"[Gmail]/All Mail" !"[Gmail]/Important" !"[Gmail]/Chats"
+Create Both
+Expunge Both
+SyncState *
+
