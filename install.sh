@@ -1,5 +1,5 @@
 #!/bin/bash
-# Adapated from Evan Chen
+# Adapted from Evan Chen
 
 set -euo pipefail
 
