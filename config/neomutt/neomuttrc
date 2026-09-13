@@ -74,5 +74,4 @@ bind index,pager r reply
 bind index,pager a group-reply
 macro index,pager A "<pipe-message>abook --add-email-quiet<enter>" "Add to contacts"
 macro index,pager V <pipe-message>urlscan<enter>
-
-
+set query_command = "abook --mutt-query %s"
