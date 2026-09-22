@@ -75,3 +75,20 @@ bind index,pager a group-reply
 macro index,pager A "<pipe-message>abook --add-email-quiet<enter>" "Add to contacts"
 macro index,pager V <pipe-message>urlscan<enter>
 set query_command = "abook --mutt-query %s"
+#set pager_context = 3                # show 3 lines of context
+set pager_stop                       # stop at end of message
+set menu_scroll                      # scroll menu
+set tilde
+set wait_key = no		     # mutt won't ask "press key to continue"
+set fast_reply
+unset sig_dashes
+unset markers
+set charset = "utf-8"
+set uncollapse_jump
+set sort_re
+set sort = reverse-threads
+set sort_aux = last-date-received
+# How we reply and quote emails.
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+set send_charset = "utf-8:iso-8859-1:us-ascii"
