@@ -109,6 +109,7 @@ ALLOW_JAVASCRIPT_WEBSITES = (
     r"*://0xparc.org/*",
     r"*://127.0.0.1/*",
     r"*://accounts.google.com/*",
+    r"*://*.classroom.google.com/*"
     r"*://artofproblemsolving.com/*",
     r"*://arxiv.org/*",
     r"*://atcoder.jp/*",
