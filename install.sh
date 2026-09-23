@@ -41,13 +41,13 @@ link_dot_path bashrc
 link_dot_path gitconfig
 #link_dot_path gvimrc
 #link_dot_path latexmkrc
-#link_dot_path mbsyncrc
+link_dot_path mbsyncrc
 #link_dot_path shellcheckrc
 link_dot_path taskrc
 #link_dot_path xinitrc
 #link_dot_path xprofile
 
-link_dot_path abook
+#link_dot_path abook
 
 #link_hidden_path config/bat
 #link_hidden_path config/biome
@@ -70,6 +70,10 @@ link_hidden_path config/rofi
 #link_hidden_path config/rumdl
 #link_hidden_path config/von
 link_hidden_path config/zathura
+link_hidden_path config/polybar
+link_hidden_path config/task
+
+link_hidden_path config/systemd/user/landlord.service
 
 link_hidden_path config/systemd/user/landlord.service
 link_hidden_path config/systemd/user/landlord.timer
