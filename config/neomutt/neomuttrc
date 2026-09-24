@@ -7,6 +7,7 @@ set editor = "nvim"
 set sort = 'reverse-date'
 set mailcap_path = "/home/nathan/.config/neomutt/mailcap"
 
+set mail_check_stats
 auto_view text/html
 alternative_order text/html text/plain 
 
@@ -74,6 +75,8 @@ bind index,pager r reply
 bind index,pager a group-reply
 macro index,pager A "<pipe-message>abook --add-email-quiet<enter>" "Add to contacts"
 macro index,pager V <pipe-message>urlscan<enter>
+macro compose A "<enter-command> source $HOME/nathan_dotfiles/scripts/filepicker.sh|<enter>" "Attach with file manager"
+
 set query_command = "abook --mutt-query %s"
 #set pager_context = 3                # show 3 lines of context
 set pager_stop                       # stop at end of message
@@ -92,3 +95,8 @@ set sort_aux = last-date-received
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 set send_charset = "utf-8:iso-8859-1:us-ascii"
+
+set editor = "nvim"
+
+color status green default
+#set signature = "~/nathan_dotfiles/config/neomutt/signature"
