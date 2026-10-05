@@ -9,6 +9,13 @@ return {
 			vim.diagnostic.config({
 				virtual_text = true,
 			})
+			vim.lsp.config("tinymist", {
+				settings = {
+					formatterMode = "typstyle",
+					exportPdf = "onType", -- or "onSave"
+					semanticTokens = "disable",
+				},
+			})
 		end,
 	},
 	{
@@ -17,6 +24,7 @@ return {
 			ensure_installed = {
 				"rust_analyzer",
 				"pyright",
+				"tinymist",
 				"lua_ls",
 			},
 			automatic_enable = true,
