@@ -12,13 +12,13 @@ if TYPE_CHECKING:
     config = cast(Any, None)
 
 config.load_autoconfig()
-c.content.headers.user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0"
 
 c.backend = "webengine"
 c.content.blocking.method = "both"
 c.content.javascript.enabled = True
 c.downloads.position = "bottom"
 c.downloads.remove_finished = 5000
+c.content.site_specific_quirks.enabled = True
 c.fonts.default_size = "16pt"
 c.hints.auto_follow = "unique-match"
 c.hints.auto_follow_timeout = 700
