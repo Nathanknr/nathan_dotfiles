@@ -1,7 +1,6 @@
 global !p
 def math():
-    return vim.eval("v:lua.typst_in_math()") in (1, "1", True)
-    #return int(vim.eval("v:lua.typst_in_math()")) == 1
+    return str(vim.eval("v:lua.typst_in_math()")) in ("1", "True")
 endglobal
 
 snippet ff "Inline Math" wA
