@@ -1,6 +1,7 @@
 global !p
 def math():
     return vim.eval("v:lua.typst_in_math()") in (1, "1", True)
+    #return int(vim.eval("v:lua.typst_in_math()")) == 1
 endglobal
 
 snippet ff "Inline Math" wA
@@ -48,15 +49,80 @@ snippet vec "vector"
 arrow($1)$0
 endsnippet
 
-#context "math()"
+context "math()"
 snippet "([\w]|[\}\)\]\|'])'" "Superscript" rA
 `!p snip.rv = match.group(1)`^${1:${VISUAL:}}$0
 endsnippet
 
-#context "math()"
+context "math()"
 snippet "([a-zA-Z]|[\}\)\]\|']);" "Subscript" rA
 `!p snip.rv = match.group(1)`_${1:${VISUAL:}}$0
 endsnippet
 
 
+context "math()"
+snippet hh "hat()" iA
+hat($1)$0
+endsnippet
+
+context "math()"
+snippet cc "cal()" iA
+cal($1)$0
+endsnippet
+
+context "math()"
+snippet aa "absolute value" iA
+cal($1)$0
+endsnippet
+
+snippet tst "debug" A
+`!p snip.rv = repr(vim.eval("v:lua.typst_in_math()")) + " / " + repr(math())`
+endsnippet
+
+context "math()"
+snippet xnn "xn" iA
+x_{n)
+endsnippet
+
+context "math()"
+snippet ynn "yn" iA
+y_{n)
+endsnippet
+
+
+
+context "math()"
+snippet xii "xi" iA
+x_(i)
+endsnippet
+
+context "math()"
+snippet yii "yi" iA
+y_(i)
+endsnippet
+
+context "math()"
+snippet xjj "xj" iA
+x_(j)
+endsnippet
+
+context "math()"
+snippet yjj "yj" iA
+y_(j)
+endsnippet
+
+context "math()"
+snippet phi "phi" iA
+\phi
+endsnippet
+
+context "math()"
+snippet xp1 "x" iA
+x_(n+1)
+endsnippet
+
+context "math()"
+snippet xmm "x" iA
+x_(m)
+endsnippet
 
