@@ -4,7 +4,10 @@ notify-send "i3: study mode" -i applications-education \
   -u low \
   "<b>a</b>: anki
 <b>c</b>: create flashcard (fr)
-<b>d</b>: plan your day 
 <b>p</b>: open pdf 
 <b>s</b>: spyder (ww)
+<b>d</b>: open download folder
+<b>n</b>: open notes folder in nvim
+<b>m</b>: open mail in neomutt
+<b>d</b>: open dotfiles dir in nvim
 <b>Return/Escape</b>: exit mode"

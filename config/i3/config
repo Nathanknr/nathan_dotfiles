@@ -191,11 +191,11 @@ bindsym $mod+Shift+p mode "power"; exec --no-startup-id ~/.config/i3/reminder-po
 # study mode [mod + w]
 mode "study" {
   bindsym p exec kitty fish -c "cd /home/nathan/Resources/Notes && pa", mode "default"
-  bindsym n exec kitty fish -c "cd /home/nathan/Resources/Notes/pdf && nvim", mode "default"
-  bindsym a exec anki, mode "default"
-  bindsym c exec kitty fish --init-command "commandline -i 'fr'", mode "default"
+  bindsym n exec kitty fish -c "cd /home/nathan/Resources/Notes && nvim", mode "default"
+  bindsym d exec kitty fish -c "cd /home/nathan/nathan_dotfiles && nvim", mode "default"
+  bindsym a exec kitty fish -c "cd /home/nathan/Downloads/Miscellaneous/anki-linux && ./anki", mode "default"
   bindsym s exec kitty fish -c "ww", mode "default"
-  bindsym d exec --no-startup-id kitty fish -c "~/.config/scripts/plan_your_day.sh", mode "default"
+  bindsym m exec kitty fish -c "neomutt", mode "default"
   bindsym Escape mode "default"
 }
 bindsym $mod+Shift+w mode "study"; exec --no-startup-id ~/.config/i3/reminder-study.sh
