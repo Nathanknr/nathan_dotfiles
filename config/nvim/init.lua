@@ -21,6 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup("plugins")
 require("configs.keymaps")
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = ""
 
