@@ -164,7 +164,7 @@ bar {
 
 
 # Hotkeys
-bindsym $mod+b exec brave-browser
+bindsym $mod+b exec qutebrowser
 bindsym $mod+t exec rofi -modi tasks:rofi-taskwarrior -show tasks
 bindsym $mod+g exec rofi -modi calc -show calc -calc-command 'xdotool type --clearmodifiers "{result}"'
 bindsym $mod+Shift+b exec --no-startup-id ~/.config/i3/start_break.sh
