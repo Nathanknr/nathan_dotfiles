@@ -61,3 +61,25 @@ vim.api.nvim_create_autocmd(
 		end,
 	}
 )
+
+function _G.typst_in_math()
+	local ok, parser = pcall(vim.treesitter.get_parser, 0, "typst")
+	if not ok or not parser then
+		return false
+	end
+	parser:parse() -- force a fresh tree
+
+	local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+	row = row - 1
+	col = math.max(col - 1, 0) -- look at the char before the cursor
+
+	local node = vim.treesitter.get_node({ bufnr = 0, pos = { row, col } })
+	while node do
+		local t = node:type()
+		if t == "math" or t == "formula" then
+			return true
+		end
+		node = node:parent()
+	end
+	return false
+end
