@@ -33,6 +33,8 @@ pluck + block	host:x.com
 pluck + block	host:x.com	program:/usr/bin/python3.14
 pluck + block	host:youtube.com
 pluck + block	host:youtube.com	program:/usr/bin/python3.14
+pluck + block   host: cinejoy.to
+pluck + block   host: cinejoy.to program:/usr/bin/python3.14
 pluck + block	program:/ net.ankiweb.Anki/ org.sqlitebrowser.sqlitebrowser/ re.sonny.Eloquent/
 pluck + block	program:/home/nathan/.local/bin/zen
 pluck + block	program:/home/nathan/.local/share/flatpak/

@@ -19,16 +19,26 @@ unset __conda_setup
 
 . "$HOME/.local/share/../bin/env"
 
-# p  () {
-#    open=zathura
-#    ag -U -g ".pdf$" \
-#    | fast-p \
-#    | fzf --read0 --reverse -e -d $'\t'  \
-#        --preview-window down:80% --preview '
-#            v=$(echo {q} | tr " " "|"); 
-#            echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;
-#        ' \
-#    | cut -z -f 1 -d $'\t' | tr -d '\n' | xargs -r --null $open > /dev/null 2> /dev/null
-#}
+p  () {
+    open=zathura
+    ag -U -g ".pdf$" \
+    | fast-p \
+    | fzf --read0 --reverse -e -d $'\t'  \
+        --preview-window down:80% --preview '
+            v=$(echo {q} | tr " " "|"); 
+            echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;
+        ' \
+    | cut -z -f 1 -d $'\t' | tr -d '\n' | xargs -r --null $open > /dev/null 2> /dev/null
+}
 
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/nathan/google-cloud-sdk/path.bash.inc' ]; then . '/home/nathan/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/nathan/google-cloud-sdk/completion.bash.inc' ]; then . '/home/nathan/google-cloud-sdk/completion.bash.inc'; fi
