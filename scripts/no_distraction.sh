@@ -1,6 +1,15 @@
 #!/usr/bin/bash
 pluck del allow everything
 pluck delay 28000
+# DNS
+pluck + allow 185.228.168.168
+pluck + block port 53
+pluck + block port 853
+pluck + block port 5353
+pluck + block port 8443
+pluck + nodoh
+pluck + system
+
 pluck + when 0-6 block port:443
 #pluck + import:9623d022-89f3-4914-a436-5a834261f172
 pluck + allow	host:github.com
