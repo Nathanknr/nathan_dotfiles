@@ -49,3 +49,6 @@ urgency.user.sport.review.coefficient=4.0
 urgency.user.tag.com.coefficient=3.5
 urgency.user.tag.house.coefficient=5.5
 urgency.user.tag.learn.coefficient=5.75
+
+include /home/nathan/secrets.rc
+
