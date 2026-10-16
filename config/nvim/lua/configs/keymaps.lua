@@ -87,7 +87,7 @@ end
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function()
-		if vim.bo.filetype == "markdown" then
+		if vim.bo.filetype == "markdown" or vim.bo.filetype == "diff" then
 			return
 		end
 		local view = vim.fn.winsaveview()
