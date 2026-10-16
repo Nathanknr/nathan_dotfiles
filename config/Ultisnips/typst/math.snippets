@@ -42,86 +42,79 @@ snippet "([a-zA-Z]|[\}\)\]\|']);" "Subscript" rA
 `!p snip.rv = match.group(1)`_(${1:${VISUAL:}})$0
 endsnippet
 
-
-context "math()"
-snippet vec "vector" 
-arrow($1)$0
-endsnippet
-
 context "math()"
 snippet "([\w]|[\}\)\]\|'])'" "Superscript" rA
 `!p snip.rv = match.group(1)`^${1:${VISUAL:}}$0
 endsnippet
 
+
 context "math()"
-snippet "([a-zA-Z]|[\}\)\]\|']);" "Subscript" rA
-`!p snip.rv = match.group(1)`_${1:${VISUAL:}}$0
+snippet vec "vector" iA
+arrow($1)$0
 endsnippet
 
-
 context "math()"
-snippet hh "hat()" iA
+snippet hh "hat" iA
 hat($1)$0
 endsnippet
 
 context "math()"
-snippet cc "cal()" iA
+snippet cc "cal" iA
 cal($1)$0
 endsnippet
 
 context "math()"
 snippet aa "absolute value" iA
-cal($1)$0
-endsnippet
-
-snippet tst "debug" A
-`!p snip.rv = repr(vim.eval("v:lua.typst_in_math()")) + " / " + repr(math())`
+abs($1)$0
 endsnippet
 
 context "math()"
-snippet xnn "xn" iA
-x_{n)
-endsnippet
-
-context "math()"
-snippet ynn "yn" iA
-y_{n)
+snippet part "partial" iA
+(partial $1)/(partial $2)$0
 endsnippet
 
 
+context "math()"
+snippet xnn "x_n" iA
+x_(n)
+endsnippet
 
 context "math()"
-snippet xii "xi" iA
+snippet ynn "y_n" iA
+y_(n)
+endsnippet
+
+context "math()"
+snippet xii "x_i" iA
 x_(i)
 endsnippet
 
 context "math()"
-snippet yii "yi" iA
+snippet yii "y_i" iA
 y_(i)
 endsnippet
 
 context "math()"
-snippet xjj "xj" iA
+snippet xjj "x_j" iA
 x_(j)
 endsnippet
 
 context "math()"
-snippet yjj "yj" iA
+snippet yjj "y_j" iA
 y_(j)
 endsnippet
 
 context "math()"
-snippet phi "phi" iA
-\phi
-endsnippet
-
-context "math()"
-snippet xp1 "x" iA
+snippet xp1 "x_(n+1)" iA
 x_(n+1)
 endsnippet
 
 context "math()"
-snippet xmm "x" iA
+snippet xmm "x_m" iA
 x_(m)
 endsnippet
 
+
+snippet tst "debug" A
+`!p snip.rv = repr(vim.eval("v:lua.typst_in_math()")) + " / " + repr(math())`
+endsnippet
