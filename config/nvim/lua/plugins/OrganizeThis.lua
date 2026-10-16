@@ -25,11 +25,7 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
+		opts = {},
 		keys = {
 			{
 				"<leader>?",
@@ -42,6 +38,7 @@ return {
 	},
 	{
 		"kaarmu/typst.vim",
+		ft = "typst",
 		init = function()
 			vim.g.typst_conceal = 1
 			vim.g.typst_conceal_math = 1
@@ -55,25 +52,20 @@ return {
 		opts = {},
 	},
 	{
-
 		"chomosuke/typst-preview.nvim",
-
 		lazy = false, -- or ft = 'typst'
-
 		version = "1.*",
-
-		opts = {}, -- lazy.nvim will implicitly calls `setup {}`
-		{
-			"SirVer/ultisnips",
-			event = "InsertEnter",
-
-			init = function()
-				vim.g.UltiSnipsSnippetDirectories = { "/home/nathan/.config/Ultisnips" }
-				vim.g.UltiSnipsExpandTrigger = "<tab>"
-				vim.g.UltiSnipsJumpForwardTrigger = "<tab>"
-				vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
-				vim.g.UltiSnipsEditSplit = "vertical"
-			end,
-		},
+		opts = {}, -- lazy.nvim implicitly calls `setup {}`
+	},
+	{
+		"SirVer/ultisnips",
+		event = "InsertEnter",
+		init = function()
+			vim.g.UltiSnipsSnippetDirectories = { "/home/nathan/.config/Ultisnips" }
+			vim.g.UltiSnipsExpandTrigger = "<tab>"
+			vim.g.UltiSnipsJumpForwardTrigger = "<tab>"
+			vim.g.UltiSnipsJumpBackwardTrigger = "<C-k>"
+			vim.g.UltiSnipsEditSplit = "vertical"
+		end,
 	},
 }
