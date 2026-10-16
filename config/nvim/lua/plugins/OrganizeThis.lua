@@ -55,22 +55,6 @@ return {
 		version = "1.*",
 
 		opts = {}, -- lazy.nvim will implicitly calls `setup {}`
-	},
-	--{
-	--	"vimwiki/vimwiki",
-	--	lazy = false,
-	--	priority = 1000, -- Load first
-	--	init = function()
-	--		vim.g.vimwiki_list = {
-	--			{
-	--				path = "~/vimwiki/",
-	--				syntax = "default",
-	--				ext = ".wiki",
-	--			},
-	--		}
-	--	end,
-	--},
-	{
 		{
 			"SirVer/ultisnips",
 			event = "InsertEnter",
